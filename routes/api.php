@@ -23,6 +23,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'location',
+    'middleware' => ['is.traveler'],
 ], function () {
     Route::post('/')->uses([LocationController::class, 'store']);;
 });

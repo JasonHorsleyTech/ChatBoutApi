@@ -13,6 +13,7 @@ class Traveler extends Model
     protected $fillable = [
         'uuid',
         'secret',
+        'print',
         'name',
         'location_id',
         'last_seen',

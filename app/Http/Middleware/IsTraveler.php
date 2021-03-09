@@ -9,7 +9,8 @@ class IsTraveler
 {
     public function handle($request, Closure $next)
     {
-        if ($request->has('uuid') && Traveler::where('uuid', $request->get('uuid'))->exists()) {
+        $secret = $request->cookie('secret');
+        if (Traveler::where('secret', $secret)) {
             return $next($request);
         }
 

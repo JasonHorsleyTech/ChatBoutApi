@@ -18,12 +18,18 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'traveler',
 ], function () {
-    Route::post('/')->uses([TravelerController::class, 'store']);;
+    Route::post('/')->uses([TravelerController::class, 'store']);
+
+    Route::group([
+        'middleware' => ['is.traveler'],
+    ], function() {
+        Route::patch('/{uuid}')->uses([TravelerController::class, 'update']);
+    });
 });
 
 Route::group([
     'prefix' => 'location',
     'middleware' => ['is.traveler'],
 ], function () {
-    Route::post('/')->uses([LocationController::class, 'store']);;
+    Route::post('/')->uses([LocationController::class, 'store']);
 });

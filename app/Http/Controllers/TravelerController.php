@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Traveler;
 use Illuminate\Http\Request;
+use Hash;
 
 class TravelerController extends Controller
 {
@@ -35,13 +36,19 @@ class TravelerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'secret' => 'required',
+            'print' => 'required',
             'name' => 'sometimes|string',
         ]);
 
-        $traveler = Traveler::create(array_merge($validated, ['uuid' => guid()]));
+        $payload = array_merge($validated, [
+            'uuid' => guid(),
+            'secret' => Hash::make('secret'),
+        ]);
 
-        return response($traveler->uuid, 201);
+        $traveler = Traveler::create($payload);
+
+        return response($traveler->uuid, 201)
+            ->withCookie(cookie('secret', $payload['secret'], 180));
     }
 
     /**
@@ -63,7 +70,6 @@ class TravelerController extends Controller
      */
     public function edit(Traveler $traveler)
     {
-        //
     }
 
     /**
@@ -73,9 +79,16 @@ class TravelerController extends Controller
      * @param  \App\Models\Traveler  $traveler
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Traveler $traveler)
+    public function update(Request $request, $travelerUuid)
     {
-        //
+        $traveler = Traveler::firstOrFail('uuid', $travelerUuid);
+        $validated = $request->validate([
+            'name' => 'string',
+        ]);
+
+        $traveler->update($validated);
+
+        return response($traveler, 201);
     }
 
     /**

@@ -17,7 +17,8 @@ class CreateTravelersTable extends Migration
             $table->id();
 
             $table->string('uuid')->nullable();
-            $table->string('secret')->nullable();
+            $table->string('print')->nullable();
+            $table->string('secret');
             $table->string('name')->nullable();
 
             $table->integer('location_id')->indexed()->nullable();

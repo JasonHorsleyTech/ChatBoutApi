@@ -48,6 +48,7 @@ class TravelerController extends Controller
         $traveler = Traveler::create($payload);
 
         return response($traveler->uuid, 201)
+            // ->withCookie(cookie('secret', $payload['secret'], 180, null, '.chat-bout-api.test', false, true));
             ->withCookie(cookie('secret', $payload['secret'], 180));
     }
 

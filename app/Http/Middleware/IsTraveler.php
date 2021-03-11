@@ -10,7 +10,7 @@ class IsTraveler
     public function handle($request, Closure $next)
     {
         $secret = $request->cookie('secret');
-        if (Traveler::where('secret', $secret)) {
+        if (Traveler::where('secret', $secret)->first()) {
             return $next($request);
         }
 

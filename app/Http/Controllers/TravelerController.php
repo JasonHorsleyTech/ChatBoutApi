@@ -77,15 +77,12 @@ class TravelerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Traveler  $traveler
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $travelerUuid)
+    public function update(Request $request)
     {
-        $traveler = Traveler::firstOrFail('uuid', $travelerUuid);
-        $validated = $request->validate([
-            'name' => 'string',
-        ]);
+        $validated = $request->validate(['name' => 'string']);
+        $traveler = $this::getTraveler();
 
         $traveler->update($validated);
 

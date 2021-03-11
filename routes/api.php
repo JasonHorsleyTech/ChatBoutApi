@@ -23,7 +23,7 @@ Route::group([
     Route::group([
         'middleware' => ['is.traveler'],
     ], function() {
-        Route::patch('/{uuid}')->uses([TravelerController::class, 'update']);
+        Route::patch('/')->uses([TravelerController::class, 'update']);
     });
 });
 

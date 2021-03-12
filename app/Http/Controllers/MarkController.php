@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Location as LocationResource;
 use App\Models\Mark;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,6 @@ class MarkController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -35,7 +35,21 @@ class MarkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $payload = $request->validate([
+            'content' => 'required|string|min:2|max:256',
+            'location_key' => 'required|string|size:64',
+        ]);
+        $traveler = $this::getTraveler();
+        $locationController = new LocationController();
+        $location = $locationController->store($request);
+
+        Mark::create([
+            'location_id' => $location->id,
+            'traveler_id' => $traveler->id,
+            'content' => $payload['content']
+        ]);
+
+        return new LocationResource($location->fresh());
     }
 
     /**

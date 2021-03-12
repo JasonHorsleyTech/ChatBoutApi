@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\MarkController;
 use App\Http\Controllers\TravelerController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +33,11 @@ Route::group([
     'middleware' => ['is.traveler'],
 ], function () {
     Route::post('/')->uses([LocationController::class, 'store']);
+});
+
+Route::group([
+    'prefix' => 'mark',
+    'middleware' => ['is.traveler'],
+], function () {
+    Route::post('/')->uses([MarkController::class, 'store']);
 });

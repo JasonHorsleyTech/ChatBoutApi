@@ -21,8 +21,6 @@ class Controller extends BaseController
     {
         $secret = request()->cookie('secret');
 
-        info($secret);
-
         return Traveler::where('secret', $secret)->firstOrFail();
     }
 }

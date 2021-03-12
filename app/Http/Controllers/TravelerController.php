@@ -35,10 +35,7 @@ class TravelerController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'print' => 'required',
-            'name' => 'sometimes|string',
-        ]);
+        $validated = $request->validate(['name' => 'sometimes|string']);
 
         $payload = array_merge($validated, [
             'uuid' => guid(),

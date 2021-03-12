@@ -37,16 +37,13 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'location_key' => 'required',
-            'uuid' => 'required',
-        ]);
+        $validated = $request->validate(['location_key' => 'required']);
+        $traveler = $this::getTraveler();
 
         $location = Location::firstOrCreate([
             'location_key' => $validated['location_key']
         ]);
-        
-        $traveler = Traveler::firstWhere('uuid', $validated['uuid']);
+
         $traveler->update([
             'location_id' => $location->id,
             'last_seen' => now()

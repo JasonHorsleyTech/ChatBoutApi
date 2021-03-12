@@ -10,6 +10,12 @@ class Mark extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'content',
+        'traveler_id',
+        'location_id',
+    ];
+
     public function location(): BelongsTo
     {
         return $this->belongsTo(Location::class);

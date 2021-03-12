@@ -18,6 +18,7 @@ class CreateMarksTable extends Migration
 
             $table->integer('location_id')->unsigned()->indexed();
             $table->string('traveler_id')->indexed();
+            $table->string('content', 256);
 
             $table->timestamps();
         });
